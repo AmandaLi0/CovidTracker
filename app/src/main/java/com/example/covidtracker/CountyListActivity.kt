@@ -3,6 +3,7 @@ package com.example.covidtracker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covidtracker.databinding.ActivityCountyListBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,6 +16,7 @@ class CountyListActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityCountyListBinding
+    lateinit var adapter: CountyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,14 @@ class CountyListActivity : AppCompatActivity() {
                 response: Response<List<CountyData>>
             ) {
                 Log.d(TAG, "onResponse: ${response.body()}")
+                if(response.body() != null){
+                    adapter = CountyAdapter(response.body()!!)
+                }
+                else{
+                    Log.d(TAG, "body is null :(")
+                }
+                binding.recyclerViewCountyList.adapter = adapter
+                binding.recyclerViewCountyList.layoutManager = LinearLayoutManager(this)
             }
 
             //what we do if the call doesn't work
