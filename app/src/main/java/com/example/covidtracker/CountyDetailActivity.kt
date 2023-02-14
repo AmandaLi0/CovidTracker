@@ -7,22 +7,22 @@ import com.example.covidtracker.databinding.ActivityCountyDetailBinding
 import com.example.covidtracker.databinding.ActivityCountyListBinding
 
 class CountyDetailActivity : AppCompatActivity() {
-
     companion object {
         val EXTRA_COUNTY = "county"
 
     }
 
     private lateinit var binding: ActivityCountyDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCountyDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val hero = intent?.getParcelableExtra<County>(EXTRA_COUNTY)
+        val county = intent?.getParcelableExtra<CountyData>(EXTRA_COUNTY)
         binding.textViewDetailCounty.text = county?.county
-        binding.textViewDetailDate.text = county?.date
-        binding.textViewDetailWeeklyCases.text = county?.metrics.weeklyNewCasesPer100K.toString()
+        binding.textViewDetailDate.text = county?.lastUpdatedDate
+        binding.textViewDetailWeeklyCases.text = county?.metrics?.weeklyNewCasesPer100k.toString()
         //binding.textViewDetailSuperpower.text = hero?.superpower
 //        val heroName = ""
 //        val heroDrawable = getDrawable(resources.getIdentifier(hero?.image, "drawable", packageName))

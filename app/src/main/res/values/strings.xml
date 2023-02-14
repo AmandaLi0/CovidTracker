@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CovidTracker</string>
+    <string name="sort_by_name">sort by name</string>
+    <string name="sort_by_transmissionLevel">sort by transmission level</string>
+    <string name="sort_by_Info">sort by info</string>
+    <string name="Info">info</string>
 </resources>

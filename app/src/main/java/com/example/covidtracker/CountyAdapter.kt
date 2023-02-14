@@ -17,15 +17,16 @@ class CountyAdapter(var dataSet: List<CountyData>) :
      * (custom ViewHolder)
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textViewCounty: TextView
-        val textViewDate: TextView
-        val textViewWeeklyCases: TextView
+        val nameTextView: TextView
+        val lastUpdatedTextView: TextView
+        val casesTextView: TextView
         val layout: ConstraintLayout
 
+
         init {
-            textViewCounty = view.findViewById(R.id.textView_countyitem_county)
-            textViewDate = view.findViewById(R.id.textView_countyitem_lastUpdatedDate)
-            textViewWeeklyCases = view.findViewById(R.id.textView_countyitem_weeklyCases)
+            nameTextView = view.findViewById(R.id.textView_countyitem_county)
+            lastUpdatedTextView = view.findViewById(R.id.textView_countyitem_lastUpdatedDate)
+            casesTextView = view.findViewById(R.id.textView_countyitem_weeklyCases)
             layout = view.findViewById(R.id.layout_countyitem)
         }
     }
@@ -36,30 +37,74 @@ class CountyAdapter(var dataSet: List<CountyData>) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.item_county_data, viewGroup, false)
 
-        return ViewHolder(view)
+        val holder = ViewHolder(view)
+        return holder
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        val county = dataSet[position]
-        viewHolder.textViewCounty.text = county.county
-        viewHolder.textViewDate.text = county.lastUpdatedDate
-        viewHolder.textViewWeeklyCases.text = county.metrics.weeklyNewCasesPer100K.toString()
-        viewHolder.layout.setOnClickListener {
-            Toast.makeText(it.context, county.toString(), Toast.LENGTH_SHORT).show()
-            //make intent to open new activity
+    override fun onBindViewHolder(holder: CountyAdapter.ViewHolder, position: Int) {
+        val context = holder.casesTextView.context
+        val countyData = dataSet[holder.layoutPosition]
+        holder.nameTextView.text = countyData.county
+        holder.casesTextView.text = countyData?.metrics?.weeklyNewCasesPer100k.toString()
+        holder.lastUpdatedTextView.text = countyData.lastUpdatedDate
+        holder.layout.setOnClickListener {
             val detailIntent = Intent(it.context, CountyDetailActivity::class.java)
-//            detailIntent.putExtra(HeroesDetailActivity.EXTRA_NAME, hero.name)
-//            detailIntent.putExtra(HeroesDetailActivity.EXTRA_DESCRIPTION, hero.description)
-//            detailIntent.putExtra(HeroesDetailActivity.EXTRA_SUPERPOWER, hero.superpower)
-//            detailIntent.putExtra(HeroesDetailActivity.EXTRA_RANKING, hero.ranking)
-//            detailIntent.putExtra(HeroesDetailActivity.EXTRA_IMAGE, hero.image)
+            detailIntent.putExtra(CountyDetailActivity.EXTRA_COUNTY, countyData)
+            it.context.startActivity(detailIntent)
+        }
 
-//            detailIntent.putExtra(CountyDetailActivity.EXTRA_COUNTY, county)
-//            it.context.startActivity(detailIntent)
+        when (countyData.cdcTransmissionLevel) {
+            // low
+            0 -> {
+                holder.nameTextView.setTextColor(
+                    context.resources.getColor(
+                        R.color.low_transmission,
+                        context.theme
+                    )
+                )
+                holder.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            }
+            // moderate
+            1 -> {
+                holder.nameTextView.setTextColor(
+                    context.resources.getColor(
+                        R.color.black,
+                        context.theme
+                    )
+                )
+                holder.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.ic_baseline_notification_important_24, 0, 0, 0
+                )
+            }
+            // substantial
+            2 -> {
+                holder.nameTextView.setTextColor(
+                    context.resources.getColor(
+                        R.color.substantial_transmission,
+                        context.theme
+                    )
+                )
+                holder.nameTextView
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        R.drawable.ic_baseline_warning_amber_24, 0, 0, 0
+                    )
+            }
+            // high
+            3 -> {
+                holder.nameTextView.setTextColor(
+                    context.resources.getColor(
+                        R.color.high_transmission,
+                        context.theme
+                    )
+                )
+                holder.nameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.ic_baseline_warning_24,
+                    0,
+                    0,
+                    0
+                )
+            }
         }
     }
 

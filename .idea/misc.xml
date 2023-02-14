@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_notification_important_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_warning_amber_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_more_info_24.xml" value="0.101" />
         <entry key="app/src/main/res/layout/activity_county_detail.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_county_list.xml" value="0.29438405797101447" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16160081053698075" />
         <entry key="app/src/main/res/layout/item_county_data.xml" value="0.335" />
+        <entry key="app/src/main/res/menu/countylist_menu.xml" value="0.18333333333333332" />
       </map>
     </option>
   </component>

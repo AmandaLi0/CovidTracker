@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_countyitem"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView_countyitem_county"
-        android:layout_width="190dp"
-        android:layout_height="33dp"
+        android:layout_width="202dp"
+        android:layout_height="29dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="county"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView_countyitem_weeklyCases"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
